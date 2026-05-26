@@ -8,3 +8,5 @@ virtual environment in VSCode. To do that, we use the commands (python -m venv .
 to switch your interpreter path to your current environment in order to utilize the nmap module. You can do this by using the command (which python3) to obtain
 the path to your file, to which you then use the commands (Cmd + Shift + P) and look for "Python: Select Interpreter". Click "Enter interpreter path" and paste
 the command you copied earlier.
+
+Remember to use this tool responsibily and to be aware of the legal concerns.
