@@ -9,5 +9,5 @@ to switch your interpreter path to your current environment in order to utilize 
 the path to your file, to which you then use the commands (Cmd + Shift + P) and look for "Python: Select Interpreter". Click "Enter interpreter path" and paste
 the command you copied earlier.
 
-Remember to use this tool responsibily and to be aware of the legal concerns.
+Remember to use this tool responsibily and to be aware of the legal concerns. I have used and tested this tool on my own virtual network isolated from my ISP network. 
 https://nmap.org/book/legal-issues.html
