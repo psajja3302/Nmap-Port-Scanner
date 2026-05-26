@@ -10,3 +10,4 @@ the path to your file, to which you then use the commands (Cmd + Shift + P) and 
 the command you copied earlier.
 
 Remember to use this tool responsibily and to be aware of the legal concerns.
+https://nmap.org/book/legal-issues.html
