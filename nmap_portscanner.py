@@ -80,7 +80,6 @@ def main():
         t.join()
 
     #Formatted Output, very similar to running the nmap command
-    filter_label = {'1': 'open', '2': 'closed', '3': 'all'}
     print(f"\n{'PORT':<10} {'STATE':<12} {'PROTOCOL':<10} {'SERVICE':<15} {'PRODUCT & VERSION'}")
     print("-" * 70)
     for port in sorted(ports.keys()):
@@ -88,7 +87,13 @@ def main():
         product_version = f"{info['product']} {info['version']}".strip()
         print(f"{info['port']:<10} {info['state']:<12} {info['protocol']:<10} {info['service']:<15} {product_version or 'N/A'}")
 
-    print(f"\nScan complete. {len(ports)} {filter_label[display]} port(s) found.")
+    open_count = len(ports)
+    closed_count = (max - min + 1) - open_count
+
+    if display == '1':
+        print(f"\nScan complete. {open_count} open port(s) found.")
+    else:
+        print(f"\nScan complete. {open_count} open port(s) found. {closed_count} closed/filtered port(s) found.")
 
 
 if __name__ == "__main__":
