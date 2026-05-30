@@ -6,16 +6,24 @@ import threading
 
 NUM_THREADS = 400
 
-def scanner(ip, port, lock):
+def scanner(ip, port, ports):
     try:
         nm = nmap.PortScanner()
-        with lock:
-            result = nm.scan(ip, str(port))
-            port_status = (result['scan'][ip]['tcp'][port]['state'])
-            print(f"Port {port} is {port_status}")
+        result = nm.scan(ip, str(port), arguments='-sV')  # -sV enables service/version detection
+        tcp_data = result['scan'][ip]['tcp'][port]
+
+        port_info = {
+            'port': port,
+            'state': tcp_data.get('state', 'unknown'),
+            'service': tcp_data.get('name', 'unknown'),
+            'product': tcp_data.get('product', ''),
+            'version': tcp_data.get('version', ''),
+            'protocol': tcp_data.get('protocol', 'tcp') if 'protocol' in tcp_data else 'tcp',
+            'extrainfo': tcp_data.get('extrainfo', ''),
+        }
+        ports[port] = port_info
     except:
-        with lock:
-            print(f"Cannot scan port {port}")
+        pass
 
 
 def main():
@@ -44,12 +52,11 @@ def main():
     print(f'\nScanning ports {min} – {max} on {ipinput}...\n')
 
     #Threading Process using Scanner 
-    lock = threading.Lock()
     t_list = []
-    ports = []
+    ports = {}
 
     for port in range(min, max + 1):
-        t = threading.Thread(target=scanner, args=(ipinput, port, lock))
+        t = threading.Thread(target=scanner, args=(ipinput, port, ports))
         t_list.append(t)
         t.start()
         if len(t_list) >= NUM_THREADS:
@@ -58,6 +65,17 @@ def main():
             t_list.clear()
     for t in t_list:
         t.join()
+
+    print(f"\n{'PORT':<10} {'STATE':<12} {'PROTOCOL':<10} {'SERVICE':<15} {'PRODUCT & VERSION'}")
+    print("-" * 70)
+    for port in sorted(results.keys()):
+        info = results[port]
+        product_version = f"{info['product']} {info['version']}".strip()
+        if info['extrainfo']:
+            product_version += f" ({info['extrainfo']})"
+        print(f"{info['port']:<10} {info['state']:<12} {info['protocol']:<10} {info['service']:<15} {product_version or 'N/A'}")
+
+    print(f"\nScan complete. {len(results)} open port(s) found.")
 
 
 if __name__ == "__main__":
