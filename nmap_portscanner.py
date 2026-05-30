@@ -18,7 +18,7 @@ def scanner(ip, port, ports, display):
 
         port_info = {
             'port': port,
-            'state': tcp_data.get('state', 'unknown'),
+            'state': state,
             'service': tcp_data.get('name', '') or 'unassigned',
             'product': tcp_data.get('product', ''),
             'version': tcp_data.get('version', ''),
@@ -87,8 +87,8 @@ def main():
         product_version = f"{info['product']} {info['version']}".strip()
         print(f"{info['port']:<10} {info['state']:<12} {info['protocol']:<10} {info['service']:<15} {product_version or 'N/A'}")
 
-    open_count = len(ports)
-    closed_count = (max - min + 1) - open_count
+    open_count = sum(1 for info in ports.values() if info['state'] == 'open')
+    closed_count = sum(1 for info in ports.values() if info['state'] != 'open')
 
     if display == '1':
         print(f"\nScan complete. {open_count} open port(s) found.")
