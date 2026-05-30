@@ -6,13 +6,14 @@ import threading
 
 NUM_THREADS = 400
 
-def scanner(ip, port, ports):
+def scanner(ip, port, ports, display):
     try:
         nm = nmap.PortScanner()
         result = nm.scan(ip, str(port), arguments='-sV') # -sV detection. Arguments can be changed if a larger breadth of commands is preferred.
         tcp_data = result['scan'][ip]['tcp'][port]
+        state = tcp_data.get('state', 'unknown')
 
-        if tcp_data.get('state') != 'open':
+        if display == '1' and state != 'open':
             return
 
         port_info = {
@@ -51,6 +52,16 @@ def main():
             break
         print('Invalid range. Use format 0-65535, min must be <= max.')
 
+    #User picks if they would like all ports displayed or open ports only.
+    while True:
+        print('\nWhat ports would you like to display?')
+        print('1 - Open ports only')
+        print('2 - All ports')
+        display = input('Enter choice (1/2): ').strip()
+        if display in ('1', '2'):
+            break
+        print('Invalid choice. Enter 1 or 2.')
+
     print(f'\nScanning ports {min} – {max} on {ipinput}...\n')
 
     #Threading Process using Scanner method
@@ -58,7 +69,7 @@ def main():
     ports = {}
 
     for port in range(min, max + 1):
-        t = threading.Thread(target=scanner, args=(ipinput, port, ports))
+        t = threading.Thread(target=scanner, args=(ipinput, port, ports, display))
         t_list.append(t)
         t.start()
         if len(t_list) >= NUM_THREADS:
@@ -69,20 +80,15 @@ def main():
         t.join()
 
     #Formatted Output, very similar to running the nmap command
-    print(f"\n{'PORT'.ljust(10)} {'STATE'.ljust(12)} {'PROTOCOL'.ljust(10)} {'SERVICE'.ljust(15)} {'PRODUCT & VERSION'}")
+    filter_label = {'1': 'open', '2': 'closed', '3': 'all'}
+    print(f"\n{'PORT':<10} {'STATE':<12} {'PROTOCOL':<10} {'SERVICE':<15} {'PRODUCT & VERSION'}")
     print("-" * 70)
     for port in sorted(ports.keys()):
         info = ports[port]
         product_version = f"{info['product']} {info['version']}".strip()
-        print(
-            str(info['port']).ljust(10) +
-            info['state'].ljust(12) +
-            info['protocol'].ljust(10) +
-            info['service'].ljust(15) +
-            (product_version or 'N/A')
-        )
+        print(f"{info['port']:<10} {info['state']:<12} {info['protocol']:<10} {info['service']:<15} {product_version or 'N/A'}")
 
-    print(f"\nScan complete. {len(ports)} open port(s) found.")
+    print(f"\nScan complete. {len(ports)} {filter_label[display]} port(s) found.")
 
 
 if __name__ == "__main__":
