@@ -1,6 +1,6 @@
 # 🔍 Nmap Port Scanner
 
-> Building on a [simple port scanner](https://github.com/pavansajja/Simple-Port-Scanner), this project incorporates the `nmap` module for deeper network reconnaissance — including service detection, protocol identification, and version fingerprinting.
+> Building on a [simple port scanner]((https://github.com/psajja3302/Simple-Port-Scanner)), this project incorporates the `nmap` module for deeper network reconnaissance — including service detection, protocol identification, and version fingerprinting.
 
 ---
 
