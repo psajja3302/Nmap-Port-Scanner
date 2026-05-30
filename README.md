@@ -1,10 +1,10 @@
-# 🔍 Nmap Port Scanner
+# Nmap Port Scanner
 
 > Building on a [simple port scanner](https://github.com/psajja3302/Simple-Port-Scanner), this project incorporates the `nmap` module for deeper network reconnaissance — including service detection, protocol identification, and version fingerprinting.
 
 ---
 
-## ⚠️ Legal Disclaimer
+## Legal Disclaimer
 
 **This tool is intended for educational purposes and authorized network scanning only.**
 
@@ -16,7 +16,7 @@ Scanning networks or systems without explicit permission is **illegal and unethi
 
 ---
 
-## 📋 Features
+## Features
 
 - Scans a user-specified IP address and port range
 - Multi-threaded scanning (400 threads) for fast results
@@ -28,7 +28,7 @@ Scanning networks or systems without explicit permission is **illegal and unethi
 
 ---
 
-## 🛠️ Requirements
+## Requirements
 
 - macOS (tested) or Kali Linux
 - Python 3.x
@@ -38,7 +38,7 @@ Scanning networks or systems without explicit permission is **illegal and unethi
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 ### Step 1 — Install the nmap binary
 
@@ -56,7 +56,7 @@ nmap --version
 
 ### Step 2 — Set up a Python virtual environment in VSCode
 
-It is strongly recommended to use a virtual environment to keep your dependencies isolated per project.
+It is strongly recommended to use a virtual environment to keep your dependencies isolated per project. The same process can be done on Kali.
 
 Open your project folder in VSCode, then open the integrated terminal (`Ctrl + `` ` ``) and run:
 
@@ -75,11 +75,6 @@ source .venv/bin/activate
 With your virtual environment active:
 ```bash
 pip install python-nmap
-```
-
-Verify it works:
-```bash
-python3 -c "import nmap; print('nmap ready!')"
 ```
 
 ---
@@ -102,11 +97,11 @@ VSCode needs to know which Python interpreter to use so it can resolve the `nmap
 4. Click **"Enter interpreter path..."**
 5. Paste the path from Step 1
 
-> VSCode saves this interpreter choice per project folder — you won't need to repeat this step every time you open the project.
+> VSCode saves this interpreter choice per project folder, so you won't need to repeat this step every time you open the project.
 
 ---
 
-## 🚀 Usage
+## Usage
 
 Run the scanner from your terminal:
 ```bash
@@ -118,7 +113,7 @@ You will be prompted to enter:
 2. **Port range** — e.g. `20-80`
 3. **Display mode** — `1` for open ports only, `2` for all ports
 
-### Example Output
+### Example Output (Target IP: 192.168.1.10 | Port Range: 20-30 | Display Mode: 1)
 
 ```
 Scanning ports 20 – 30 on 192.168.1.10...
@@ -129,5 +124,5 @@ PORT       STATE        PROTOCOL   SERVICE         PRODUCT & VERSION
 22         open         tcp        ssh             OpenSSH 4.7p1
 23         open         tcp        telnet          N/A
 
-Scan complete. 3 open port(s) found. 8 closed/filtered port(s) found.
+Scan complete. 3 open port(s) found.
 ```
