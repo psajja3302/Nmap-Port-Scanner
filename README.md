@@ -12,7 +12,7 @@ Scanning networks or systems without explicit permission is **illegal and unethi
 
 > I have tested this tool exclusively on my own private virtual network, isolated from my ISP, using a **Metasploitable 2.0** instance as the target.
 
-📖 Read more: [https://nmap.org/book/legal-issues.html](https://nmap.org/book/legal-issues.html)
+Read more: [https://nmap.org/book/legal-issues.html](https://nmap.org/book/legal-issues.html)
 
 ---
 
